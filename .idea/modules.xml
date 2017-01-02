@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MyTimeZone.iml" filepath="$PROJECT_DIR$/MyTimeZone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TimeZoneGit.iml" filepath="$PROJECT_DIR$/TimeZoneGit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements  PlaceSelectionLi
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         dialog.setMessage("Fetching..");
+
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         autocompleteFragment.setOnPlaceSelectedListener(this);
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements  PlaceSelectionLi
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(timeZoneArrayList , this);
         mRecyclerView.setAdapter(mAdapter);
+        //Internet availability check
         if (!Utils.isNetworkAvailable(this))
          Toast.makeText(getApplicationContext() ,"Connect internet to add Time Zone",Toast.LENGTH_LONG).show();
 
@@ -79,10 +81,8 @@ public class MainActivity extends AppCompatActivity implements  PlaceSelectionLi
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        //mTextView.setText("Response is: "+ response.substring(0,500));
-                       // Log.e("TAGLast" , response.toString());
                         try {
+                            //parsing of JSON Object
                             JSONObject jsonObject = new JSONObject(response);
                                 boolean flag = false;
                                 for (com.example.adreestaj.mytimezone.Model.TimeZone timeZone:timeZoneArrayList){
@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements  PlaceSelectionLi
                             if (!flag){
                                 ArrayList<String> cities = new ArrayList<>();
                                 cities.add(city);
+                                //object making of timezone to add in list
                                 com.example.adreestaj.mytimezone.Model.TimeZone tm =
                                         new com.example.adreestaj.mytimezone.Model.TimeZone(
                                                 jsonObject.getString("timeZoneId")
@@ -119,17 +120,18 @@ public class MainActivity extends AppCompatActivity implements  PlaceSelectionLi
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-               // mTextView.setText("That didn't work!");
+
             }
         });
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
+    //Place selection listener
     @Override
     public void onPlaceSelected(Place place) {
         dialog.show();
-        Log.i("TAG", "Place: " + place.getName());
+        //Log.i("TAG", "Place: " + place.getName());
         String latLng =  place.getLatLng().toString();
         latLng = latLng.substring(latLng.indexOf("(") + 1, latLng.indexOf(")"));
         long timestamp = System.currentTimeMillis() / 1000;
@@ -138,12 +140,14 @@ public class MainActivity extends AppCompatActivity implements  PlaceSelectionLi
 
 
     }
-
+    //error listener of place selection
     @Override
     public void onError(Status status) {
         Log.i("TAG", "An error occurred: " + status);
 
     }
+
+    //Adapter class of recycler view
     public class MyAdapter extends RecyclerView.Adapter<myViewHolder>{
 
         List<TimeZone> timeZones;
@@ -173,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements  PlaceSelectionLi
 
 
     }
-
+    //ViewHolder of recycler view
     class myViewHolder extends RecyclerView.ViewHolder {
 
         TextView sCity, sTimeZoneText;
