@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyTimeZone</string>
+    <string name="google_api_key">AIzaSyBf-B4Gcj-zq2c0UNTFaXhhQyBAjuEpM5o</string>
+    <string name="search_str">Tap to search City/Country</string>
+</resources>
